@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon -L",
+    "lint": "eslint src/**/*.ts --ignore-path .gitignore",
+    "fix": "eslint src/**/*.ts --ignore-path .gitignore --fix",
+    "prettier": "prettier --write",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -21,7 +24,28 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.15",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "husky": "^4.3.8",
+    "lint-staged": "^12.1.4",
     "nodemon": "^2.0.20",
+    "prettier": "^2.5.1",
     "tsconfig-paths": "^4.1.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }
