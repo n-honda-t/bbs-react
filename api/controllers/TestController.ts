@@ -5,7 +5,7 @@ export class TestController {
   @Get('/test')
   async test() {
     return {
-      message: 'testa',
+      message: 'test',
     }
   }
 }
