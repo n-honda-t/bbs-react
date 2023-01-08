@@ -1,11 +1,11 @@
-import { Get, JsonController } from "routing-controllers";
+import { Get, JsonController } from 'routing-controllers'
 
 @JsonController()
 export class TestController {
-    @Get('/test')
-    async test() {
-        return {
-            message: 'testa'
-        }
+  @Get('/test')
+  async test() {
+    return {
+      message: 'testa',
     }
+  }
 }
