@@ -11,3 +11,11 @@ export const MysqlDataSource = new DataSource({
   migrations: ['db/migrations/**/*.ts'],
   subscribers: ['db/subscribers/**/*.ts'],
 })
+
+MysqlDataSource.initialize()
+  .then(() => {
+    console.log('Data Source has been initialized!')
+  })
+  .catch((err) => {
+    console.error('Error during Data Source initialization', err)
+  })

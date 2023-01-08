@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   BaseEntity,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm'
 import { Post } from './post'
 import { User } from './user'
@@ -15,11 +16,11 @@ export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number
 
-  @Column()
-  user_id!: number
+  @Column({ name: 'user_id' })
+  userId!: number
 
-  @Column()
-  post_id!: number
+  @Column({ name: 'post_id' })
+  postId!: number
 
   @Column({ length: 512 })
   content!: string
@@ -34,11 +35,13 @@ export class Comment extends BaseEntity {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+  @JoinColumn({ name: 'user_id' })
   user: User
 
   @ManyToOne((_type) => Post, (post) => post.comments, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+  @JoinColumn({ name: 'post_id' })
   post: Post
 }

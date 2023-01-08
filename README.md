@@ -8,3 +8,6 @@ migration
 ```
 npm run typeorm migration:generate db/migrations/migration
 ```
+
+## コンテナの入り方
+- psql -U postgres

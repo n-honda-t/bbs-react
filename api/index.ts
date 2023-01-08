@@ -2,8 +2,10 @@ import 'reflect-metadata'
 import express from 'express'
 import bodyParser from 'body-parser'
 import { useExpressServer } from 'routing-controllers'
-import { DataSource } from 'typeorm'
 import { TestController } from './controllers/TestController'
+import { UserController } from './controllers/UserController'
+import { PostController } from './controllers/PostController'
+import { CommentController } from './controllers/CommentController'
 
 const PORT = 3333
 
@@ -13,7 +15,7 @@ async function bootstrap() {
   app.use(bodyParser.json())
 
   useExpressServer(app, {
-    controllers: [TestController],
+    controllers: [TestController, UserController, PostController, CommentController],
   })
 
   app.listen(PORT, () => {

@@ -7,6 +7,7 @@ import {
   BaseEntity,
   ManyToOne,
   OneToMany,
+  JoinColumn,
 } from 'typeorm'
 
 import { User } from './user'
@@ -36,8 +37,9 @@ export class Post extends BaseEntity {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+  @JoinColumn({ name: 'user_id' })
   user: User
 
-  @OneToMany(() => Post, (post) => post.comments)
+  @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[]
 }
