@@ -1,4 +1,4 @@
-button{
+button {
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -7,16 +7,17 @@ button{
   appearance: none;
 }
 
-textarea, input {
-	margin: 0;
-	padding: 0;
-	background: none;
-	border: none;
-	border-radius: 0;
-	outline: none;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
+textarea,
+input {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 a {

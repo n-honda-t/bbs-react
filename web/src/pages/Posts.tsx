@@ -1,10 +1,10 @@
 import { FC, Suspense, useEffect } from 'react'
-import styled from "styled-components";
+import styled from 'styled-components'
 import useSWR from 'swr'
-import { useFetcher } from '../hooks/useFetcher';
+import { useFetcher } from '../hooks/useFetcher'
 import { useNavigate } from 'react-router-dom'
-import { Link } from "react-router-dom";
-import { Layout } from '../components/Layout';
+import { Link } from 'react-router-dom'
+import { Layout } from '../components/Layout'
 
 type Post = {
   id: number
@@ -53,9 +53,9 @@ const Button = styled.button`
   background-color: #eb6100;
   border-radius: 8px;
   &:hover {
-  color: #fff;
-  background: #f56500;
-}
+    color: #fff;
+    background: #f56500;
+  }
 `
 
 export const Posts: FC = () => {
@@ -64,19 +64,19 @@ export const Posts: FC = () => {
 
   const { data } = useSWR<Post[]>('http://localhost:3333/posts', fetcher)
   return (
-      <Layout>
-        <Button onClick={() => navigate('/posts/create')}>投稿する</Button>
-        {data?.map((post) => (
-          <PostSection key={post.id}>
-            <Link to={`/posts/${post.id}`}>
-              <PostTitle>{ post.title }</PostTitle>
-            </Link>
-            <PostSubTitle>
-              <SubContent>{ post.user.name }</SubContent>
-              <SubContent>{ post.createdAt }</SubContent>
-            </PostSubTitle>
-          </PostSection>
-        ))}
-      </Layout>
+    <Layout>
+      <Button onClick={() => navigate('/posts/create')}>投稿する</Button>
+      {data?.map((post) => (
+        <PostSection key={post.id}>
+          <Link to={`/posts/${post.id}`}>
+            <PostTitle>{post.title}</PostTitle>
+          </Link>
+          <PostSubTitle>
+            <SubContent>{post.user.name}</SubContent>
+            <SubContent>{post.createdAt}</SubContent>
+          </PostSubTitle>
+        </PostSection>
+      ))}
+    </Layout>
   )
 }

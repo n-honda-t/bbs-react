@@ -8,9 +8,9 @@ import { SWRConfig } from 'swr'
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <RecoilRoot>
-      <SWRConfig value={{suspense: true}}>
-      <Suspense fallback="loading...">
-        <RouterConfig />
+      <SWRConfig value={{ suspense: true }}>
+        <Suspense fallback="loading...">
+          <RouterConfig />
         </Suspense>
       </SWRConfig>
     </RecoilRoot>

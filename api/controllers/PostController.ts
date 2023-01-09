@@ -20,6 +20,9 @@ export class PostController {
     return await PostEntity.find({
       relationLoadStrategy: 'query',
       relations: ['user'],
+      order: {
+        id: 'DESC',
+      },
     })
   }
 
@@ -44,7 +47,7 @@ export class PostController {
   async show(@Param('id') id: number) {
     return await PostEntity.findOne({
       relationLoadStrategy: 'query',
-      relations: ['comments'],
+      relations: ['comments', 'user'],
       where: {
         id,
       },

@@ -9,7 +9,7 @@ const { persistAtom } = recoilPersist()
 
 export const authState = atom<AuthState>({
   default: {
-    id: null
+    id: null,
   },
   effects_UNSTABLE: [persistAtom],
   key: 'authState',

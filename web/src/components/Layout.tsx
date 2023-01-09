@@ -1,7 +1,7 @@
-import { FC, ReactNode } from "react";
-import styled from "styled-components";
+import { FC, ReactNode } from 'react'
+import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { authState } from '../store/auth';
+import { authState } from '../store/auth'
 import { useRecoilValue } from 'recoil'
 
 const Wrapper = styled.div`
@@ -24,9 +24,5 @@ export const Layout: FC<Props> = ({ children }) => {
     navigate('/')
   }
 
-  return (
-    <Wrapper>
-      {children}
-    </Wrapper>
-  )
+  return <Wrapper>{children}</Wrapper>
 }
