@@ -30,7 +30,7 @@ export class PostController {
     })
 
     if (!user) {
-      return response.status(404).json({ message: 'ユーザー見つかりません。' })
+      return response.status(404).json({ message: 'ユーザーが見つかりません。' })
     }
 
     return await PostEntity.create({

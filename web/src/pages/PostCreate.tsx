@@ -1,22 +1,17 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import styled from "styled-components";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom'
+import { useSetRecoilState } from 'recoil';
+import useSWR from 'swr'
+import { useFetcher } from '../hooks/useFetcher';
 import { authState } from '../store/auth';
-import { useFetcher } from '../hooks/useFetcher'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
 
 type Inputs = {
-  name: string,
-  email: string,
-}
-
-type User = {
-  id: number
-  email: string
-  name: string
-  createdAt: string
-  updatedAt: string
+  userId: number
+  title: string
+  content: string
 }
 
 const Wrapper = styled.div`
@@ -55,6 +50,19 @@ border-radius: 8px;
 }
 `
 
+const Textarea = styled.textarea`
+width: 382px;
+border: 1px solid  #eb6100;
+padding: 8px;
+font-size: 16px;
+border-radius: 8px;
+&:focus {
+  border: 1px solid #f56500;
+  z-index: 10;
+  outline: 0;
+}
+`
+
 const Button = styled.button`
 width: 400px;
 height: 40px;
@@ -66,11 +74,12 @@ color: #fff;
 background: #f56500;
 }
 `
+
 const FormError = styled.div`
 color: red;
 `
 
-export const Login: FC = () => {
+export const PostCreate: FC = () => {
   const {
     register,
     handleSubmit,
@@ -79,18 +88,16 @@ export const Login: FC = () => {
   const navigate = useNavigate()
   const { fetcher } = useFetcher()
   const setAuthState = useSetRecoilState(authState)
+  const state = useRecoilValue(authState)
 
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    fetcher<User>('http://localhost:3333/login', {
+    fetcher('http://localhost:3333/posts', {
       method: 'POST',
-      body: JSON.stringify(formData),
+      body: JSON.stringify({...formData, userId: state.id}),
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((user) => {
-      setAuthState({
-        id: user.id
-      })
+    }).then(() => {
       navigate('/posts')
     }).catch((error) => {
       console.error(error)
@@ -101,32 +108,32 @@ export const Login: FC = () => {
     <Wrapper>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <InputForm>
-          <Label>email</Label>
-          <Input required {...register('email', { required: {
-            value: true,
-            message: '必須です。'
-          }, pattern: {
-                value: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+/,
-                message: "入力形式がメールアドレスではありません。"
-              } })} />
-          <FormError>
-            {errors.email?.message}
-          </FormError>
-        </InputForm>
-        <InputForm>
-          <Label>name</Label>
-          <Input required {...register('name', { required: {
+          <Label>タイトル</Label>
+          <Input required {...register('title', { required: {
             value: true,
             message: '必須です。'
           }, maxLength: {
-            value: 20,
-            message: '20文字を超える入力はできません。'
-          } })} />
+            value: 255,
+            message: '255文字を超える入力はできません。'
+          }})} />
           <FormError>
-            {errors.name?.message}
+            {errors.title?.message}
           </FormError>
         </InputForm>
-        <Button type='submit'>ログイン</Button>
+        <InputForm>
+          <Label>記事内容</Label>
+          <Textarea rows={10} {...register('content', { required: {
+            value: true,
+            message: '必須です。'
+          }, maxLength: {
+            value: 1000,
+            message: '1000文字を超える入力はできません。'
+          } })} />
+          <FormError>
+            {errors.content?.message}
+          </FormError>
+        </InputForm>
+        <Button type='submit'>記事を作成する</Button>
       </Form>
     </Wrapper>
   )

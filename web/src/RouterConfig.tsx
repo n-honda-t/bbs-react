@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Posts } from "./pages/Posts";
-import { SWRConfig } from 'swr'
+import { PostCreate } from "./pages/PostCreate";
 
 export const RouterConfig: FC = () => {
   return (
@@ -11,7 +11,7 @@ export const RouterConfig: FC = () => {
         <Route index element={<Login />} />
         <Route path="posts">
           <Route index element={<Posts/>} />
-          <Route path="create" element={<>create post!</>} />
+          <Route path="create" element={<PostCreate/>} />
         </Route>
       </Routes>
     </BrowserRouter>

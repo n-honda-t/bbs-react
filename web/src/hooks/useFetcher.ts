@@ -1,3 +1,4 @@
+// TODO: 200 系以外の型も入れられるようにしたい. もしくは、axios に変えるか.
 const wrap = <T>(task: Promise<Response>): Promise<T> => {
   return new Promise((resolve, reject) => {
     task
