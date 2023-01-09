@@ -1,9 +1,9 @@
-import { FC, useEffect } from 'react'
+import { FC, Suspense, useEffect } from 'react'
 import styled from "styled-components";
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil';
-import useSWR from 'swr'
+import useSWRImmutable from 'swr/immutable';
 import { useFetcher } from '../hooks/useFetcher';
 import { authState } from '../store/auth';
 import { useRecoilValue } from 'recoil'
@@ -13,6 +13,24 @@ type Inputs = {
   userId: number
   title: string
   content: string
+}
+
+type Post = {
+  id: number
+  userId: number
+  title: string
+  content: string
+  createdAt: string
+  updatedAt: string
+  user: User
+}
+
+type User = {
+  id: number
+  email: string
+  name: string
+  createdAt: string
+  updatedAt: string
 }
 
 const Form = styled.form`
@@ -71,7 +89,7 @@ const FormError = styled.div`
 color: red;
 `
 
-export const PostCreate: FC = () => {
+export const PostEdit: FC = () => {
   const {
     register,
     handleSubmit,
@@ -79,18 +97,19 @@ export const PostCreate: FC = () => {
   } = useForm<Inputs>()
   const navigate = useNavigate()
   const { fetcher } = useFetcher()
-  const setAuthState = useSetRecoilState(authState)
   const state = useRecoilValue(authState)
+  const { id } = useParams()
+  const { data } = useSWRImmutable<Post>(`http://localhost:3333/posts/${id}`, fetcher)
 
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    fetcher('http://localhost:3333/posts', {
-      method: 'POST',
+    fetcher(`http://localhost:3333/posts/${id}`, {
+      method: 'PUT',
       body: JSON.stringify({...formData, userId: state.id}),
       headers: {
         "Content-Type": "application/json",
       },
     }).then(() => {
-      navigate('/posts')
+      navigate(`/posts/${id}`)
     }).catch((error) => {
       console.error(error)
     })
@@ -101,7 +120,7 @@ export const PostCreate: FC = () => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <InputForm>
           <Label>タイトル</Label>
-          <Input required {...register('title', { required: {
+          <Input defaultValue={data?.title} required {...register('title', { required: {
             value: true,
             message: '必須です。'
           }, maxLength: {
@@ -114,7 +133,7 @@ export const PostCreate: FC = () => {
         </InputForm>
         <InputForm>
           <Label>記事内容</Label>
-          <Textarea rows={10} {...register('content', { required: {
+          <Textarea defaultValue={data?.content} rows={10} {...register('content', { required: {
             value: true,
             message: '必須です。'
           }, maxLength: {
@@ -125,8 +144,8 @@ export const PostCreate: FC = () => {
             {errors.content?.message}
           </FormError>
         </InputForm>
-        <Button type='submit'>記事を作成する</Button>
+        <Button type='submit'>記事を更新する</Button>
       </Form>
-    </Layout>
+      </Layout>
   )
 }
