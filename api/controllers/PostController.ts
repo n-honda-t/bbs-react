@@ -17,7 +17,10 @@ class CreatePostBody {
 export class PostController {
   @Get()
   async index() {
-    return await PostEntity.find()
+    return await PostEntity.find({
+      relationLoadStrategy: 'query',
+      relations: ['user'],
+    })
   }
 
   @Post()
@@ -40,6 +43,7 @@ export class PostController {
   @Get('/:id')
   async show(@Param('id') id: number) {
     return await PostEntity.findOne({
+      relationLoadStrategy: 'query',
       relations: ['comments'],
       where: {
         id,

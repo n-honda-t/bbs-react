@@ -19,6 +19,57 @@ type User = {
   updatedAt: string
 }
 
+const Wrapper = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+height: 92vh;
+gap: 16px;
+`
+
+const Form = styled.form`
+display: flex;
+flex-direction: column;
+gap: 16px;
+`
+
+const InputForm = styled.div`
+display: flex;
+flex-direction: column;
+`
+const Label = styled.label`
+
+`
+const Input = styled.input`
+width: 382px;
+height: 38px;
+border: 1px solid  #eb6100;
+padding: 0 8px;
+font-size: 16px;
+border-radius: 8px;
+&:focus {
+  border: 1px solid #f56500;
+  z-index: 10;
+  outline: 0;
+}
+`
+
+const Button = styled.button`
+width: 400px;
+height: 40px;
+color: #fff;
+background-color: #eb6100;
+border-radius: 8px;
+&:hover {
+color: #fff;
+background: #f56500;
+}
+`
+const FormError = styled.div`
+color: red;
+`
+
 export const Login: FC = () => {
   const {
     register,
@@ -46,61 +97,10 @@ export const Login: FC = () => {
     })
   }
 
-  const Wrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 92vh;
-    gap: 16px;
-  `
-
-  const Form = styled.form`
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  `
-
-  const InputForm = styled.div`
-    display: flex;
-    flex-direction: column;
-  `
-  const Label = styled.label`
-
-  `
-  const Input = styled.input`
-    width: 382px;
-    height: 38px;
-    border: 1px solid  #eb6100;
-    padding: 0 8px;
-    font-size: 16px;
-    border-radius: 8px;
-    &:focus {
-      border: 1px solid #f56500;
-      z-index: 10;
-      outline: 0;
-    }
-  `
-
-  const Button = styled.button`
-  width: 400px;
-  height: 40px;
-  color: #fff;
-  background-color: #eb6100;
-  border-radius: 8px;
-  &:hover {
-    color: #fff;
-    background: #f56500;
-  }
-  `
-  const FormError = styled.div`
-    color: red;
-  `
-
   return (
     <Wrapper>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <InputForm>cs
+        <InputForm>
           <Label>email</Label>
           <Input {...register('email', { required: {
             value: true,
